@@ -18,13 +18,13 @@ while True:
         print("4- Corrida")
 
         treino = input("Digite o treino que deseja adicionar: ")
-        adicionar_exercício = input("Deseja adicionar adicionar um exercício nessa categoria: ")
-        if adicionar_exercício.lower() == "sim":
+        adicionar_exercício = input("Deseja adicionar um exercício nessa categoria?").lower()
+        if adicionar_exercício== "sim":
             exercicio = input("Digite o exercício que deseja adicionar: ")
-            nomes_dos_treinos[treino] = [exercicio]
+            nomes_dos_treinos[treino] = exercicio
 
         else:
-            nomes_dos_treinos[treino]=[]
+            nomes_dos_treinos[treino]= ' '
 
     elif resposta == 2:
         print(nomes_dos_treinos)
@@ -32,7 +32,7 @@ while True:
     elif resposta == 3:
         editar = int(input("Digite o treino que deseja editar: "))
         if editar in nomes_dos_treinos: 
-            novo = float(input("Digite o execício que deseja editar: "))
+            novo = int(input("Digite o execício que deseja editar: "))
             nomes_dos_treinos[editar] = novo
         else:
             print("Opção inválida")
@@ -42,11 +42,11 @@ while True:
         if opcao.lower() == "categoria":
             categoria = input("Digite a categoria que deseja excluir: ")
             del nomes_dos_treinos [categoria]
-            print(f"{categoria} excluido(a) do seu gerenciador de treinos")
+            print(f"{categoria} excluida do seu gerenciador de treinos.")
         
         elif opcao.lower() == "exercicio" or opcao == "exercício":
             qual_categoria = input("Digite a categoria desse exercício: ")
-            exercicio_excluir = input("Digite o exercício que deseja excluir: ")
+            exercicio_excluir = input("Digite o exercício que você deseja excluir: ")
             nomes_dos_treinos[qual_categoria].remove(exercicio_excluir)
             print(f"O(A) {exercicio_excluir} foi excluído")
 
