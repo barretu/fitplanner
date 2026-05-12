@@ -43,7 +43,7 @@ while True:
         cadastrar_exercicio()
     elif opcao == "2": 
         listar_exercicios()
-    elif opcao == "3": 
+    elif opcao == "0": 
         print("Programa encerrado. ")
         break 
     
