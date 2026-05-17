@@ -1,51 +1,58 @@
 exercicios = []
 
 def cadastrar_exercicio():
-    nome = input("Nome do exercício: ")
-    series = input("Quantidade de séries: ")
-    repeticoes = input("Quantidade de repetições: ")
-    tempo = input("Tempo de exercícios: ")
-    distancia = input("Distância: ")
-    
-    exercicio = {
-        "nome": nome, 
+    print("\n--- Cadastro de exercício ---")
+
+    nome = input("Exercício: ")
+    series = input("Séries: ")
+    repeticoes = input("Repetições: ")
+    tempo = input("Tempo, se tiver: ")
+    distancia = input("Distância, se tiver: ")
+
+    novo_exercicio = {
+        "nome": nome,
         "series": series,
         "repeticoes": repeticoes,
         "tempo": tempo,
         "distancia": distancia
     }
-    
-    exercicios.append(exercicio)
-    
-    print("Exercício cadastrado com sucesso! ")
-    
-def listar_exercicios():
-    if len(exercicios) == 0:
-        print("Nenhum exercício cadastrado.")
-    else: 
-        for exercicio in exercicios:
-            print("\n---EXERCÍCIO---")
-            print(f"Nome: {exercicio['nome']}")
-            print(f"Séries: {exercicio['series']}")
-            print(f"Repetições: {exercicio['repeticoes']}")
-            print(f"Tempo: {exercicio['tempo']}")
-            print(f"Distância: {exercicio['distancia']}")
 
-while True:
-    print("\n---FITPLANNER---")
+    exercicios.append(novo_exercicio)
+    print("Exercício cadastrado.\n")
+
+
+def mostrar_exercicios():
+    if len(exercicios) == 0:
+        print("\nNenhum exercício foi cadastrado ainda.")
+    else:
+        print("\nExercícios cadastrados:")
+
+        contador = 1
+        for exercicio in exercicios:
+            print("\nExercício", contador)
+            print("Nome:", exercicio["nome"])
+            print("Séries:", exercicio["series"])
+            print("Repetições:", exercicio["repeticoes"])
+            print("Tempo:", exercicio["tempo"])
+            print("Distância:", exercicio["distancia"])
+            contador = contador + 1
+
+
+opcao = ""
+
+while opcao != "0":
+    print("\nFITPLANNER")
     print("1 - Cadastrar exercício")
-    print("2 - Listar exercícios")
+    print("2 - Ver exercícios cadastrados")
     print("0 - Sair")
-    
-    opcao = input("Escolha uma opção: ")
-    
-    if opcao == "1": 
+
+    opcao = input("Opção: ")
+
+    if opcao == "1":
         cadastrar_exercicio()
-    elif opcao == "2": 
-        listar_exercicios()
-    elif opcao == "0": 
-        print("Programa encerrado. ")
-        break 
-    
-    else: 
+    elif opcao == "2":
+        mostrar_exercicios()
+    elif opcao == "0":
+        print("Programa finalizado.")
+    else:
         print("Opção inválida.")
