@@ -112,7 +112,7 @@ Ao excluir um treino, todos os exercícios vinculados a ele são excluídos auto
 ---
 
 ## 👥 Equipe
-1° Período de Ciência da Computação CESAR School, Tumra B, 2026.1
+1° Período de Ciência da Computação CESAR School, turma B, 2026.1
 
 Kauã Cardoso,
 Letícia Almeida,
