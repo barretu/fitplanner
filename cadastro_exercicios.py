@@ -20,7 +20,6 @@ def cadastrar_exercicio():
     exercicios.append(novo_exercicio)
     print("Exercício cadastrado.\n")
 
-
 def mostrar_exercicios():
     if len(exercicios) == 0:
         print("\nNenhum exercício foi cadastrado ainda.")
@@ -36,7 +35,6 @@ def mostrar_exercicios():
             print("Tempo:", exercicio["tempo"])
             print("Distância:", exercicio["distancia"])
             contador = contador + 1
-
 
 opcao = ""
 
