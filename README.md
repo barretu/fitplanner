@@ -112,5 +112,11 @@ Ao excluir um treino, todos os exercícios vinculados a ele são excluídos auto
 ---
 
 ## 👥 Equipe
+1° Período de Ciência da Computação CESAR School, Tumra B, 2026.1
 
-Projeto desenvolvido para a disciplina de Python.
+Kauã Cardoso
+Letícia Almeida
+Letícia Dornas
+Maria Monalysa
+Maria Paula
+Thony Barreto
