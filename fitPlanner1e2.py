@@ -7,7 +7,7 @@ def cadastrar_treino():
     nome = input("Nome do treino: ")
     print("Exemplo: musculação, cardio, funcional, corrida")
     tipo = input("Tipo do treino: ")
-    data = input("Data XX/XX/XXXX: ")
+    data = input("Data DD/MM/AAAA: ")
     duracao = input("Duração: ")
     objetivo = input("Objetivo: ")
 
