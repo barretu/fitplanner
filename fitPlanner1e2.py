@@ -114,7 +114,7 @@ while True:
 
     print()
 
-    opcao = int(input("Digite a opção: "))
+    opcao = int(input("Digite a opção correspondente: "))
 
     if opcao == 1:
         cadastrar_treino()
