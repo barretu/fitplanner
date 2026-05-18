@@ -112,6 +112,8 @@ while True:
     print("4 - Excluir treino")
     print("5 - Parar")
 
+    print()
+
     opcao = int(input("Digite a opção: "))
 
     if opcao == 1:
