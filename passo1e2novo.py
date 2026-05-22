@@ -1,4 +1,5 @@
 treinos = []
+metas = []
 
 def cadastrar_treino():
     try:
@@ -175,6 +176,94 @@ def editar_treino():
     except TypeError:
         print("Digite apenas algarismos")
 
+def cadastrar_meta():
+    try:
+        print("\n--- Cadastrar meta ---")
+        print("Exemplo: perder peso, ganhar massa muscular, melhorar condicionamento")
+
+        descricao = input("Descrição da meta: ").strip()
+        if descricao == "":
+            print("Erro: A descrição da meta não pode ser vazia.")
+            return
+
+        prazo = input("Prazo para atingir a meta (DD/MM/AAAA): ").strip()
+        status = "Em andamento"
+
+        meta = {
+            "descricao": descricao,
+            "prazo": prazo,
+            "status": status
+        }
+
+        metas.append(meta)
+        print("Meta cadastrada com sucesso!")
+
+    except ValueError:
+        print("Erro: Digite os valores corretamente no cadastro da meta.")
+    else:
+        print("Cadastro de meta finalizado sem erros.")
+
+def visualizar_metas():
+    try:
+        if len(metas) == 0:
+            print("\nNenhuma meta cadastrada.")
+        else:
+            contador = 1
+            for meta in metas:
+                print("\nMeta", contador)
+                print("Descrição:", meta["descricao"])
+                print("Prazo:", meta["prazo"])
+                print("Status:", meta["status"])
+                contador += 1
+    except ValueError:
+        print("Erro ao acessar metas.")
+    else:
+        print("\nVisualização de metas concluída sem erros.")
+
+def editar_meta():
+    visualizar_metas()
+    try:
+        numero = int(input("\nDigite o número da meta que deseja editar: "))
+        if numero >= 1 and numero <= len(metas):
+            meta = metas[numero - 1]
+            meta["descricao"] = input("Nova descrição da meta: ").strip()
+            meta["prazo"] = input("Novo prazo (DD/MM/AAAA): ").strip()
+            meta["status"] = input("Novo status (Em andamento/Concluída): ").strip()
+            print("Meta editada com sucesso!")
+        else:
+            print("Meta não encontrada.")
+    except ValueError:
+        print("Digite apenas algarismos.")
+
+def excluir_meta():
+    visualizar_metas()
+    try:
+        numero = int(input("\nDigite o número da meta que deseja excluir: "))
+        if numero >= 1 and numero <= len(metas):
+            metas.pop(numero - 1)
+            print("Meta excluída.")
+        else:
+            print("Meta não encontrada.")
+    except ValueError:
+        print("Digite apenas algarismos.")
+
+def vincular_meta_ao_treino():
+    visualizar_treinos()
+    visualizar_metas()
+    try:
+        numero_treino = int(input("\nDigite o número do treino que deseja vincular: "))
+        numero_meta = int(input("Digite o número da meta que deseja associar: "))
+
+        if numero_treino >= 1 and numero_treino <= len(treinos) and numero_meta >= 1 and numero_meta <= len(metas):
+            treino = treinos[numero_treino - 1]
+            meta = metas[numero_meta - 1]
+            treino["meta"] = meta["descricao"]
+            print(f"Meta '{meta['descricao']}' vinculada ao treino '{treino['nome']}' com sucesso!")
+        else:
+            print("Treino ou meta não encontrados.")
+    except ValueError:
+        print("Digite apenas algarismos.")
+
 
 def excluir_treino():
     visualizar_treinos()
@@ -198,7 +287,12 @@ while True:
     print("2 - Visualizar treinos")
     print("3 - Editar treino")
     print("4 - Excluir treino")
-    print("5 - Parar")
+    print("5 - Adicionar meta")
+    print("6 - Visualizar metas")
+    print("7 - Editar meta")
+    print("8 - Excluir meta")
+    print("9 - Vincular meta a treino")
+    print("10 - Parar")
 
     print()
     try:
@@ -217,6 +311,16 @@ while True:
     elif opcao == 4:
         excluir_treino()
     elif opcao == 5:
+        cadastrar_meta()
+    elif opcao == 6:
+        visualizar_metas()
+    elif opcao == 7:
+        editar_meta()
+    elif opcao == 8:
+        excluir_meta()
+    elif opcao == 9:
+        vincular_meta_ao_treino()
+    elif opcao == 10:
         print("Programa finalizado.")
         break
     else:
