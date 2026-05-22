@@ -1,76 +1,107 @@
 treinos = []
 
 def cadastrar_treino():
-    print("\n--- Cadastrar treino ---")
-    print("Exemplo: Treino 1")
+    try:
+        print("\n--- Cadastrar treino ---")
+        print("Exemplo: Treino 1")
 
-    nome = input("Nome do treino: ")
-    print("Exemplo: musculação, cardio, funcional, corrida")
-    tipo = input("Tipo do treino: ")
-    data = input("Data DD/MM/AAAA: ")
-    duracao = input("Duração: ")
-    objetivo = input("Objetivo: ")
+        nome = input("Nome do treino: ").strip()
+        if nome == "":
+            print("Erro: O nome do treino não pode ser vazio.")
+            return
 
-    treino = {
-        "nome": nome,
-        "tipo": tipo,
-        "data": data,
-        "duracao": duracao,
-        "objetivo": objetivo,
-        "exercicios": []
-    }
+        print("Exemplo: musculação, cardio, funcional, corrida")
+        tipo = input("Tipo do treino: ").strip()
+        data = input("Data DD/MM/AAAA: ").strip()
+        duracao = input("Duração: ").strip()
+        objetivo = input("Objetivo: ").strip()
 
-    adicionar = input("Deseja adicionar exercício nesse treino? ").lower()
-
-    while adicionar == "sim":
-        nome_exercicio = input("Nome do exercício: ")
-        series = input("Séries: ")
-        repeticoes = input("Repetições: ")
-        tempo = input("Tempo, se tiver: ")
-        distancia = input("Distância, se tiver: ")
-
-        exercicio = {
-            "nome": nome_exercicio,
-            "series": series,
-            "repeticoes": repeticoes,
-            "tempo": tempo,
-            "distancia": distancia
+        treino = {
+            "nome": nome,
+            "tipo": tipo,
+            "data": data,
+            "duracao": duracao,
+            "objetivo": objetivo,
+            "exercicios": []
         }
 
-        treino["exercicios"].append(exercicio)
+        adicionar = input("Deseja adicionar exercício nesse treino? (sim/não) ").lower()
 
-        adicionar = input("Deseja adicionar outro exercício? ").lower()
+        while adicionar == "sim":
+            try:
+                nome_exercicio = input("Nome do exercício: ").strip()
+                if nome_exercicio == "":
+                    print("Erro: O nome do exercício não pode ser vazio.")
+                    continue
 
-    treinos.append(treino)
-    print("Treino cadastrado.")
+                try:
+                    series = int(input("Séries: "))
+                    repeticoes = int(input("Repetições: "))
+                except ValueError:
+                    print("Erro: Séries e repetições devem ser números.")
+                    continue
+
+                tempo = input("Tempo, se tiver: ").strip()
+                distancia = input("Distância, se tiver: ").strip()
+
+                exercicio = {
+                    "nome": nome_exercicio,
+                    "series": series,
+                    "repeticoes": repeticoes,
+                    "tempo": tempo,
+                    "distancia": distancia
+                }
+
+                treino["exercicios"].append(exercicio)
+                print("Exercício adicionado com sucesso!")
+
+            except ValueError:
+                print("Erro: Digite os valores corretamente dentro do exercício.")
+
+            adicionar = input("Deseja adicionar outro exercício? (sim/não) ").lower()
+
+        treinos.append(treino)
+        print("Treino cadastrado com sucesso!")
+
+    except ValueError:
+        print("Erro: Digite os valores corretamente no cadastro do treino.")
+    else:
+        print("Cadastro finalizado sem erros.")
 
 
 def visualizar_treinos():
-    if len(treinos) == 0:
-        print("\nNenhum treino cadastrado.")
+    try:
+        if len(treinos) == 0:
+            print("\nNenhum treino cadastrado.")
+        else:
+            contador = 1
+            for treino in treinos:
+                print("\nTreino", contador)
+                print("Nome:", treino["nome"])
+                print("Tipo:", treino["tipo"])
+                print("Data:", treino["data"])
+                print("Duração:", treino["duracao"])
+                print("Objetivo:", treino["objetivo"])
+
+                if len(treino["exercicios"]) == 0:
+                    print("Nenhum exercício cadastrado nesse treino.")
+                else:
+                    print("Exercícios:")
+                    for exercicio in treino["exercicios"]:
+                        print("- Nome:", exercicio["nome"])
+                        print("  Séries:", exercicio["series"])
+                        print("  Repetições:", exercicio["repeticoes"])
+                        print("  Tempo:", exercicio["tempo"])
+                        print("  Distância:", exercicio["distancia"])
+
+                contador = contador + 1
+
+    except NameError:
+        print("Erro: a lista 'treinos' não existe.")
+    except ValueError:
+        print("Erro: valor inválido ao acessar os treinos.")
     else:
-        contador = 1
-
-        for treino in treinos:
-            print("\nTreino", contador)
-            print("Nome:", treino["nome"])
-            print("Tipo:", treino["tipo"])
-            print("Data:", treino["data"])
-            print("Duração:", treino["duracao"])
-            print("Objetivo:", treino["objetivo"])
-
-            if len(treino["exercicios"]) == 0:
-                print("Nenhum exercício cadastrado nesse treino.")
-            else:
-                print("Exercícios:")
-                for exercicio in treino["exercicios"]:
-                    print("- Nome:", exercicio["nome"])
-                    print("  Séries:", exercicio["series"])
-                    print("  Repetições:", exercicio["repeticoes"])
-                    print("  Tempo:", exercicio["tempo"])
-                    print("  Distância:", exercicio["distancia"])
-
-            contador = contador + 1
+        print("\nVisualização concluída sem erros.")
 
 
 def editar_treino():
