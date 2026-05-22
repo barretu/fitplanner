@@ -107,77 +107,91 @@ def visualizar_treinos():
 def editar_treino():
     visualizar_treinos()
 
-    numero = int(input("\nDigite o número do treino que deseja editar: "))
+   try:
+        numero = int(input("\nDigite o número do treino que deseja editar: "))
 
-    if numero >= 1 and numero <= len(treinos):
-        treino = treinos[numero - 1]
+        if numero >= 1 and numero <= len(treinos):
+            treino = treinos[numero - 1]
 
-        if len(treino["exercicios"]) == 0:
-            print("Esse treino ainda não possui exercícios.")
-            adicionar = input("Deseja adicionar um exercício? ").lower()
+            if len(treino["exercicios"]) == 0:
+                print("Esse treino ainda não possui exercícios.")
+                adicionar = input("Deseja adicionar um exercício? ").lower()
 
-            while adicionar == "sim":
-                nome_exercicio = input("Nome do exercício: ")
-                series = input("Séries: ")
-                repeticoes = input("Repetições: ")
-                tempo = input("Tempo, se tiver: ")
-                distancia = input("Distância, se tiver: ")
+                while adicionar == "sim":
+                    nome_exercicio = input("Nome do exercício: ")
+                    series = input("Séries: ")
+                    repeticoes = input("Repetições: ")
+                    tempo = input("Tempo, se tiver: ")
+                    distancia = input("Distância, se tiver: ")
 
-                exercicio = {
-                    "nome": nome_exercicio,
-                    "series": series,
-                    "repeticoes": repeticoes,
-                    "tempo": tempo,
-                    "distancia": distancia
-                }
+                    exercicio = {
+                        "nome": nome_exercicio,
+                        "series": series,
+                        "repeticoes": repeticoes,
+                        "tempo": tempo,
+                        "distancia": distancia
+                    }
 
-                treino["exercicios"].append(exercicio)
+                    treino["exercicios"].append(exercicio)
 
-                adicionar = input("Deseja adicionar outro exercício? ").lower()
+                    adicionar = input("Deseja adicionar outro exercício? ").lower()
 
-            print("Exercícios editados.")
-        else:
-            print("\nExercícios do treino:")
-
-            contador = 1
-            for exercicio in treino["exercicios"]:
-                print("\nExercício", contador)
-                print("Nome:", exercicio["nome"])
-                print("Séries:", exercicio["series"])
-                print("Repetições:", exercicio["repeticoes"])
-                print("Tempo:", exercicio["tempo"])
-                print("Distância:", exercicio["distancia"])
-
-                contador = contador + 1
-
-            numero_exercicio = int(input("\nDigite o número do exercício que deseja editar: "))
-
-            if numero_exercicio >= 1 and numero_exercicio <= len(treino["exercicios"]):
-                exercicio = treino["exercicios"][numero_exercicio - 1]
-
-                exercicio["nome"] = input("Novo nome do exercício: ")
-                exercicio["series"] = input("Novas séries: ")
-                exercicio["repeticoes"] = input("Novas repetições: ")
-                exercicio["tempo"] = input("Novo tempo, se tiver: ")
-                exercicio["distancia"] = input("Nova distância, se tiver: ")
-
-                print("Exercício editado.")
+                print("Exercícios editados.")
             else:
-                print("Exercício não encontrado.")
-    else:
-        print("Treino não encontrado.")
+                print("\nExercícios do treino:")
+
+                contador = 1
+                for exercicio in treino["exercicios"]:
+                    print("\nExercício", contador)
+                    print("Nome:", exercicio["nome"])
+                    print("Séries:", exercicio["series"])
+                    print("Repetições:", exercicio["repeticoes"])
+                    print("Tempo:", exercicio["tempo"])
+                    print("Distância:", exercicio["distancia"])
+
+                    contador = contador + 1
+
+                numero_exercicio = int(input("\nDigite o número do exercício que deseja editar: "))
+
+                if numero_exercicio >= 1 and numero_exercicio <= len(treino["exercicios"]):
+                    exercicio = treino["exercicios"][numero_exercicio - 1]
+
+                    exercicio["nome"] = input("Novo nome do exercício: ")
+                    exercicio["series"] = input("Novas séries: ")
+                    exercicio["repeticoes"] = input("Novas repetições: ")
+                    exercicio["tempo"] = input("Novo tempo, se tiver: ")
+                    exercicio["distancia"] = input("Nova distância, se tiver: ")
+
+                    print("Exercício editado.")
+                else:
+                    print("Exercício não encontrado.")
+        else:
+            print("Treino não encontrado.")
+    
+    except ValueError:
+        print ("Digite apenas algarismos")
+
+    except NameError:
+        print("Digite o número de um treino existente")
+
+    except TypeError:
+        print("Digite apenas algarismos")
 
 
 def excluir_treino():
     visualizar_treinos()
+    try:
 
-    numero = int(input("\nDigite o número do treino que deseja excluir: "))
+        numero = int(input("\nDigite o número do treino que deseja excluir: "))
 
-    if numero >= 1 and numero <= len(treinos):
-        treinos.pop(numero - 1)
-        print("Treino excluído.")
-    else:
-        print("Treino não encontrado.")
+        if numero >= 1 and numero <= len(treinos):
+                treinos.pop(numero - 1)
+                print("Treino excluído.")
+        else:
+                print("Treino não encontrado.")
+
+    except ValueError:
+        print("Digite apenas algarismos")
 
 
 while True:
@@ -189,8 +203,12 @@ while True:
     print("5 - Parar")
 
     print()
+    try:
+        opcao = int(input("Digite a opção: "))
 
-    opcao = int(input("Digite a opção: "))
+    except ValueError:
+        print("Digite apenas algarismos entre as opções")
+        continue
 
     if opcao == 1:
         cadastrar_treino()
