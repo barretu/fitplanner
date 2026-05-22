@@ -95,9 +95,7 @@ def visualizar_treinos():
                         print("  Distância:", exercicio["distancia"])
 
                 contador = contador + 1
-
-    except NameError:
-        print("Erro: a lista 'treinos' não existe.")
+                
     except ValueError:
         print("Erro: valor inválido ao acessar os treinos.")
     else:
