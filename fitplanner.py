@@ -1,6 +1,10 @@
 treinos = []
 metas = []
 
+arquivo_treinos = "treinos.txt"
+arquivo_metas = "metas.txt"
+
+
 def cadastrar_treino():
     try:
         print("\n--- Cadastrar treino ---")
@@ -62,6 +66,9 @@ def cadastrar_treino():
             adicionar = input("Deseja adicionar outro exercício? (sim/não) ").lower()
 
         treinos.append(treino)
+
+        salvar_treinos()
+
         print("Treino cadastrado com sucesso!")
 
     except ValueError:
@@ -84,6 +91,9 @@ def visualizar_treinos():
                 print("Duração:", treino["duracao"])
                 print("Objetivo:", treino["objetivo"])
 
+                if "meta" in treino:
+                    print("Meta vinculada:", treino["meta"])
+
                 if len(treino["exercicios"]) == 0:
                     print("Nenhum exercício cadastrado nesse treino.")
                 else:
@@ -96,7 +106,7 @@ def visualizar_treinos():
                         print("  Distância:", exercicio["distancia"])
 
                 contador = contador + 1
-                
+
     except ValueError:
         print("Erro: valor inválido ao acessar os treinos.")
     else:
@@ -106,7 +116,7 @@ def visualizar_treinos():
 def editar_treino():
     visualizar_treinos()
 
-   try:
+    try:
         numero = int(input("\nDigite o número do treino que deseja editar: "))
 
         if numero >= 1 and numero <= len(treinos):
@@ -135,6 +145,8 @@ def editar_treino():
 
                     adicionar = input("Deseja adicionar outro exercício? ").lower()
 
+                salvar_treinos()
+
                 print("Exercícios editados.")
             else:
                 print("\nExercícios do treino:")
@@ -161,20 +173,73 @@ def editar_treino():
                     exercicio["tempo"] = input("Novo tempo, se tiver: ")
                     exercicio["distancia"] = input("Nova distância, se tiver: ")
 
+                    salvar_treinos()
+
                     print("Exercício editado.")
                 else:
                     print("Exercício não encontrado.")
         else:
             print("Treino não encontrado.")
-    
+
     except ValueError:
-        print ("Digite apenas algarismos")
+        print("Digite apenas algarismos")
 
     except NameError:
         print("Digite o número de um treino existente")
 
     except TypeError:
         print("Digite apenas algarismos")
+
+
+def salvar_treinos():
+    arquivo = open(arquivo_treinos, "w", encoding="utf-8")
+
+    for treino in treinos:
+
+        meta = treino.get("meta", "")
+
+        linha = (
+            treino["nome"] + "|" +
+            treino["tipo"] + "|" +
+            treino["data"] + "|" +
+            treino["duracao"] + "|" +
+            treino["objetivo"] + "|" +
+            meta + "\n"
+        )
+
+        arquivo.write(linha)
+
+    arquivo.close()
+
+
+def carregar_treinos():
+    try:
+        arquivo = open(arquivo_treinos, "r", encoding="utf-8")
+
+        for linha in arquivo.readlines():
+            dados = linha.strip().split("|")
+
+            if len(dados) >= 5:
+
+                treino = {
+                    "nome": dados[0],
+                    "tipo": dados[1],
+                    "data": dados[2],
+                    "duracao": dados[3],
+                    "objetivo": dados[4],
+                    "exercicios": []
+                }
+
+                if len(dados) >= 6:
+                    treino["meta"] = dados[5]
+
+                treinos.append(treino)
+
+        arquivo.close()
+
+    except FileNotFoundError:
+        pass
+
 
 def cadastrar_meta():
     try:
@@ -196,12 +261,16 @@ def cadastrar_meta():
         }
 
         metas.append(meta)
+
+        salvar_metas()
+
         print("Meta cadastrada com sucesso!")
 
     except ValueError:
         print("Erro: Digite os valores corretamente no cadastro da meta.")
     else:
         print("Cadastro de meta finalizado sem erros.")
+
 
 def visualizar_metas():
     try:
@@ -220,6 +289,7 @@ def visualizar_metas():
     else:
         print("\nVisualização de metas concluída sem erros.")
 
+
 def editar_meta():
     visualizar_metas()
     try:
@@ -229,23 +299,32 @@ def editar_meta():
             meta["descricao"] = input("Nova descrição da meta: ").strip()
             meta["prazo"] = input("Novo prazo (DD/MM/AAAA): ").strip()
             meta["status"] = input("Novo status (Em andamento/Concluída): ").strip()
+
+            salvar_metas()
+
             print("Meta editada com sucesso!")
         else:
             print("Meta não encontrada.")
     except ValueError:
         print("Digite apenas algarismos.")
 
+
 def excluir_meta():
     visualizar_metas()
     try:
         numero = int(input("\nDigite o número da meta que deseja excluir: "))
         if numero >= 1 and numero <= len(metas):
+
             metas.pop(numero - 1)
+
+            salvar_metas()
+
             print("Meta excluída.")
         else:
             print("Meta não encontrada.")
     except ValueError:
         print("Digite apenas algarismos.")
+
 
 def vincular_meta_ao_treino():
     visualizar_treinos()
@@ -257,12 +336,53 @@ def vincular_meta_ao_treino():
         if numero_treino >= 1 and numero_treino <= len(treinos) and numero_meta >= 1 and numero_meta <= len(metas):
             treino = treinos[numero_treino - 1]
             meta = metas[numero_meta - 1]
+
             treino["meta"] = meta["descricao"]
+
+            salvar_treinos()
+
             print(f"Meta '{meta['descricao']}' vinculada ao treino '{treino['nome']}' com sucesso!")
         else:
             print("Treino ou meta não encontrados.")
     except ValueError:
         print("Digite apenas algarismos.")
+
+
+def salvar_metas():
+    arquivo = open(arquivo_metas, "w", encoding="utf-8")
+
+    for meta in metas:
+        linha = (
+            meta["descricao"] + "|" +
+            meta["prazo"] + "|" +
+            meta["status"] + "\n"
+        )
+
+        arquivo.write(linha)
+
+    arquivo.close()
+
+
+def carregar_metas():
+    try:
+        arquivo = open(arquivo_metas, "r", encoding="utf-8")
+
+        for linha in arquivo.readlines():
+            dados = linha.strip().split("|")
+
+            if len(dados) == 3:
+                meta = {
+                    "descricao": dados[0],
+                    "prazo": dados[1],
+                    "status": dados[2]
+                }
+
+                metas.append(meta)
+
+        arquivo.close()
+
+    except FileNotFoundError:
+        pass
 
 
 def excluir_treino():
@@ -272,13 +392,21 @@ def excluir_treino():
         numero = int(input("\nDigite o número do treino que deseja excluir: "))
 
         if numero >= 1 and numero <= len(treinos):
-                treinos.pop(numero - 1)
-                print("Treino excluído.")
+
+            treinos.pop(numero - 1)
+
+            salvar_treinos()
+
+            print("Treino excluído.")
         else:
-                print("Treino não encontrado.")
+            print("Treino não encontrado.")
 
     except ValueError:
         print("Digite apenas algarismos")
+
+
+carregar_treinos()
+carregar_metas()
 
 
 while True:
@@ -295,6 +423,7 @@ while True:
     print("10 - Parar")
 
     print()
+
     try:
         opcao = int(input("Digite a opção: "))
 
@@ -304,24 +433,34 @@ while True:
 
     if opcao == 1:
         cadastrar_treino()
+
     elif opcao == 2:
         visualizar_treinos()
+
     elif opcao == 3:
         editar_treino()
+
     elif opcao == 4:
         excluir_treino()
+
     elif opcao == 5:
         cadastrar_meta()
+
     elif opcao == 6:
         visualizar_metas()
+
     elif opcao == 7:
         editar_meta()
+
     elif opcao == 8:
         excluir_meta()
+
     elif opcao == 9:
         vincular_meta_ao_treino()
+
     elif opcao == 10:
         print("Programa finalizado.")
         break
+
     else:
         print("Opção inválida.")
