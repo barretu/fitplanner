@@ -107,6 +107,21 @@ def visualizar_treinos():
 
                 contador = contador + 1
 
+     print(f"Há {len(treinos)} treino(s) no seu fitplanner")
+     print(f"Suas metas são: {metas}")
+
+        concluir = input("Alguma meta já foi alcançada(sim ou não)? ")
+
+        if concluir == "sim" or concluir == "Sim":
+            print("Parabéns!")
+
+            qtd_concluidas = int(input("Digite o número de metas concluídas: "))
+
+            for i in range (qtd_concluidas):
+                meta_concluida = input("Qual meta foi concluida")
+                metas_concluidas = []
+                metas_concluidas.append(meta_concluida)
+
     except ValueError:
         print("Erro: valor inválido ao acessar os treinos.")
     else:
