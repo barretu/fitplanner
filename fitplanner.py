@@ -76,7 +76,6 @@ def cadastrar_treino():
     else:
         print("Cadastro finalizado sem erros.")
 
-
 def visualizar_treinos():
     try:
         if len(treinos) == 0:
@@ -107,10 +106,10 @@ def visualizar_treinos():
 
                 contador = contador + 1
 
-     print(f"Há {len(treinos)} treino(s) no seu fitplanner")
-     print(f"Suas metas são: {metas}")
+        print(f"Há {len(treinos)} treino(s) no seu fitplanner")
+        print(f"Suas metas são: {metas}")
 
-        concluir = input("Alguma meta já foi alcançada(sim ou não)? ")
+        concluir = input("Alguma meta já foi alcançada(sim ou não)? ").lower()
 
         if concluir == "sim" or concluir == "Sim":
             print("Parabéns!")
@@ -140,7 +139,6 @@ def visualizar_treinos():
         print("Erro: valor inválido ao acessar os treinos.")
     else:
         print("\nVisualização concluída sem erros.")
-
 
 def editar_treino():
     visualizar_treinos()
