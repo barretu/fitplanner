@@ -122,6 +122,20 @@ def visualizar_treinos():
                 metas_concluidas = []
                 metas_concluidas.append(meta_concluida)
 
+        elif concluir == "não" or concluir == "nao":
+            dias_treinados = input("A quantidade de treinos realizados corresponde a sua meta? ").lower()
+            if dias_treinados == "sim":
+                print("Parabéns! Continue assim.")
+
+            elif dias_treinados == "não" or dias_treinados == "nao":
+                print("Para concluir suas metas é preciso que a rotina planejada seja realista")
+
+            else:
+                print("Resposta inválida")
+
+        else:
+            print("Resposta inválida")
+
     except ValueError:
         print("Erro: valor inválido ao acessar os treinos.")
     else:
@@ -268,11 +282,13 @@ def cadastrar_meta():
 
         prazo = input("Prazo para atingir a meta (DD/MM/AAAA): ").strip()
         status = "Em andamento"
+        rotina = int(input("Qual sua meta de treinos por semana: "))
 
         meta = {
             "descricao": descricao,
             "prazo": prazo,
-            "status": status
+            "status": status,
+            "rotina": rotina
         }
 
         metas.append(meta)
