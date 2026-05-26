@@ -4,6 +4,32 @@ metas = []
 arquivo_treinos = "treinos.txt"
 arquivo_metas = "metas.txt"
 
+def salvar_treinos():
+    with open("treinos.txt", "w", encoding="utf-8") as arquivo:
+        for treino in treinos:
+            meta = treino.get("meta", "")
+            linha = (
+                treino["nome"] + "|" +
+                treino["tipo"] + "|" +
+                treino["data"] + "|" +
+                treino["duracao"] + "|" +
+                treino["objetivo"] + "|" +
+                meta + "\n"
+            )
+            arquivo.write(linha)
+
+
+def salvar_metas():
+    with open(metas.txt, "w", encoding="utf-8") as arquivo:
+        for meta in metas:
+            linha = (
+                meta["descricao"] + "|" +
+                meta["prazo"] + "|" +
+                meta["status"] + "|" +
+                str(meta.get("rotina", "")) + "\n"
+            )
+            arquivo.write(linha)
+
 
 def cadastrar_treino():
     try:
