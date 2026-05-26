@@ -5,31 +5,37 @@ arquivo_treinos = "treinos.txt"
 arquivo_metas = "metas.txt"
 
 def salvar_treinos():
-    with open("treinos.txt", "w", encoding="utf-8") as arquivo:
-        for treino in treinos:
-            meta = treino.get("meta", "")
-            linha = (
-                treino["nome"] + "|" +
-                treino["tipo"] + "|" +
-                treino["data"] + "|" +
-                treino["duracao"] + "|" +
-                treino["objetivo"] + "|" +
-                meta + "\n"
-            )
-            arquivo.write(linha)
+    arquivo = open(arquivo_treinos, "w", encoding="utf-8")
 
+    for treino in treinos:
+        meta = treino.get("meta", "")
+
+        linha = (
+            treino["nome"] + "|" +
+            treino["tipo"] + "|" +
+            treino["data"] + "|" +
+            treino["duracao"] + "|" +
+            treino["objetivo"] + "|" +
+            meta + "\n"
+        )
+
+        arquivo.write(linha)
+
+    arquivo.close()
 
 def salvar_metas():
-    with open(metas.txt, "w", encoding="utf-8") as arquivo:
-        for meta in metas:
-            linha = (
-                meta["descricao"] + "|" +
-                meta["prazo"] + "|" +
-                meta["status"] + "|" +
-                str(meta.get("rotina", "")) + "\n"
-            )
-            arquivo.write(linha)
+    arquivo = open(arquivo_metas, "w", encoding="utf-8")
 
+    for meta in metas:
+        linha = (
+            meta["descricao"] + "|" +
+            meta["prazo"] + "|" +
+            meta["status"] + "\n"
+        )
+
+        arquivo.write(linha)
+
+    arquivo.close()
 
 def cadastrar_treino():
     try:
@@ -244,27 +250,6 @@ def editar_treino():
         print("Digite apenas algarismos")
 
 
-def salvar_treinos():
-    arquivo = open(arquivo_treinos, "w", encoding="utf-8")
-
-    for treino in treinos:
-
-        meta = treino.get("meta", "")
-
-        linha = (
-            treino["nome"] + "|" +
-            treino["tipo"] + "|" +
-            treino["data"] + "|" +
-            treino["duracao"] + "|" +
-            treino["objetivo"] + "|" +
-            meta + "\n"
-        )
-
-        arquivo.write(linha)
-
-    arquivo.close()
-
-
 def carregar_treinos():
     try:
         arquivo = open(arquivo_treinos, "r", encoding="utf-8")
@@ -401,21 +386,6 @@ def vincular_meta_ao_treino():
             print("Treino ou meta não encontrados.")
     except ValueError:
         print("Digite apenas algarismos.")
-
-
-def salvar_metas():
-    arquivo = open(arquivo_metas, "w", encoding="utf-8")
-
-    for meta in metas:
-        linha = (
-            meta["descricao"] + "|" +
-            meta["prazo"] + "|" +
-            meta["status"] + "\n"
-        )
-
-        arquivo.write(linha)
-
-    arquivo.close()
 
 
 def carregar_metas():
