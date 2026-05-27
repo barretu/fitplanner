@@ -1,5 +1,6 @@
 treinos = []
 metas = []
+evolucoes = []
 
 arquivo_treinos = "treinos.txt"
 arquivo_metas = "metas.txt"
