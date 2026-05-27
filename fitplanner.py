@@ -3,6 +3,7 @@ metas = []
 
 arquivo_treinos = "treinos.txt"
 arquivo_metas = "metas.txt"
+arquivo_evolucoes = "evolucoes.txt"
 
 def salvar_treinos():
     arquivo = open(arquivo_treinos, "w", encoding="utf-8")
@@ -31,6 +32,21 @@ def salvar_metas():
             meta["descricao"] + "|" +
             meta["prazo"] + "|" +
             meta["status"] + "\n"
+        )
+
+        arquivo.write(linha)
+
+    arquivo.close()
+
+def salvar_evolucoes():
+    arquivo = open(arquivo_evolucoes, "w", encoding="utf-8")
+
+    for evolucao in evolucoes:
+        linha = (
+            evolucao["data"] + "|" +
+            str(evolucao["peso"]) + "|" +
+            str(evolucao["altura"]) + "|" +
+            str(evolucao["gordura"]) + "\n"
         )
 
         arquivo.write(linha)
@@ -278,7 +294,6 @@ def carregar_treinos():
     except FileNotFoundError:
         pass
 
-
 def cadastrar_meta():
     try:
         print("\n--- Cadastrar meta ---")
@@ -365,6 +380,44 @@ def excluir_meta():
     except ValueError:
         print("Digite apenas algarismos.")
 
+def cadastrar_evolucao():
+    try:
+        print("\n--- Cadastrar evolução física ---")
+
+        data = input("Data DD/MM/AAAA: ").strip()
+        peso = float(input("Peso: "))
+        altura = float(input("Altura: "))
+        gordura = float(input("Percentual de gordura: "))
+
+        evolucao = {
+            "data": data,
+            "peso": peso,
+            "altura": altura,
+            "gordura": gordura
+        }
+
+        evolucoes.append(evolucao)
+        salvar_evolucoes()
+
+        print("Evolução física cadastrada com sucesso!")
+
+    except ValueError:
+        print("Digite valores válidos.")
+
+def visualizar_evolucoes():
+    if len(evolucoes) == 0:
+        print("\nNenhuma evolução física cadastrada.")
+    else:
+        contador = 1
+
+        for evolucao in evolucoes:
+            print("\nEvolução", contador)
+            print("Data:", evolucao["data"])
+            print("Peso:", evolucao["peso"])
+            print("Altura:", evolucao["altura"])
+            print("Percentual de gordura:", evolucao["gordura"])
+
+            contador += 1
 
 def vincular_meta_ao_treino():
     visualizar_treinos()
@@ -386,7 +439,6 @@ def vincular_meta_ao_treino():
             print("Treino ou meta não encontrados.")
     except ValueError:
         print("Digite apenas algarismos.")
-
 
 def carregar_metas():
     try:
@@ -483,6 +535,12 @@ while True:
         vincular_meta_ao_treino()
 
     elif opcao == 10:
+        cadastrar_evolucao()
+
+    elif opcao == 11:
+        visualizar_evolucao()
+
+    elif opcao == 12:
         print("Programa finalizado.")
         break
 
