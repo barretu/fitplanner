@@ -539,7 +539,7 @@ while True:
         cadastrar_evolucao()
 
     elif opcao == 11:
-        visualizar_evolucao()
+        visualizar_evolucoes()
 
     elif opcao == 12:
         print("Programa finalizado.")
