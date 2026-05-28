@@ -14,7 +14,7 @@ Sistema de gerenciamento de rotina fitness via terminal. Permite cadastrar trein
 
 ---
 
-## 🚀 Como rodar o projeto
+## 🚀 Como rodar
 
 **Pré-requisitos:** Python 3 instalado.
 
