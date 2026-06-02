@@ -99,7 +99,6 @@ sugestoes = {
 
 # ===== FUNÇÃO DE LIMPEZA DE TELA =====
 def limpar_tela():
-    # Identifica o sistema operacional para rodar o comando correto (cls no Windows, clear no Mac/Linux)
     os.system('cls' if os.name == 'nt' else 'clear')
 
 # ======================================
