@@ -20,6 +20,11 @@ import random
 app = Flask(__name__)
 
 
+# Serve arquivos estáticos (style.css, script.js)
+@app.route("/<path:filename>")
+def static_files(filename):
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), filename)
+
 # ──────────────────────────────────────────
 # CAMINHOS DOS ARQUIVOS
 #
@@ -648,4 +653,4 @@ def index():
 if __name__ == "__main__":
     # debug=True faz o servidor reiniciar sozinho toda vez que você salva o arquivo
     # Muito útil durante o desenvolvimento — em produção tiraria o debug=True
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
