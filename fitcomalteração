@@ -35,7 +35,7 @@ sugestoes = {
         ],
         "alimentacao": [
             "Focar em um déficit calórico leve e boa ingestão de proteínas",
-            "Aumentar o consumo de fibras e vegetais folhosos nas refeições",
+            "Aumentar o consumo de fibras e hortaliças nas refeições",
             "Reduzir drasticamente o consumo de alimentos ultraprocessados e açúcar"
         ]
     },
@@ -63,7 +63,7 @@ sugestoes = {
         ],
         "alimentacao": [
             "Manter um superávit calórico limpo com carboidratos complexos",
-            "Inundar o corpo com proteínas de alto valor biológico em todas as refeições",
+            "Garantir uma boa fonte de proteína em cada refeição",
             "Consumir gorduras boas como abacate, ovos e castanhas"
         ]
     },
