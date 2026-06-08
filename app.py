@@ -5,10 +5,14 @@
 # - Flask: a classe que cria o servidor
 # - request: objeto que contém tudo que o navegador mandou (dados, parâmetros, etc)
 # - jsonify: converte dicionários Python em JSON para devolver ao navegador
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 
 # 'os' permite interagir com o sistema operacional — criar pastas, verificar arquivos, etc
 import os
+
+# 'random' é usado na rota de sugestões para sortear exercícios e dicas
+# Importado aqui no topo, seguindo a convenção Python (PEP8: imports no início do arquivo)
+import random
 
 # Cria o servidor Flask e guarda na variável 'app'
 # '__name__' é uma variável especial do Python que contém o nome do arquivo atual
@@ -598,9 +602,6 @@ DICAS_GERAIS = [
 # Retorna sugestões aleatórias baseadas no tipo de treino passado na URL
 @app.route("/sugestoes", methods=["GET"])
 def get_sugestoes():
-    # Importado aqui dentro pois só é usado nessa função
-    import random
-
     # Lê o parâmetro ?tipo= da URL. Se não passar, usa "musculacao" como padrão
     tipo = request.args.get("tipo", "musculacao")
 
@@ -630,10 +631,11 @@ def get_sugestoes():
 
 @app.route("/")
 def index():
-    # Abre o index.html, lê o conteúdo e manda pro navegador
-    # O navegador recebe o HTML e renderiza o site
-    with open("index.html", "r", encoding="utf-8") as f:
-        return f.read()
+    # send_from_directory serve o arquivo a partir do diretório do projeto.
+    # É a forma correta no Flask: funciona independente de onde o servidor foi iniciado,
+    # define o Content-Type correto e lida com cache do navegador adequadamente.
+    # os.path.dirname(os.path.abspath(__file__)) retorna a pasta onde app.py está.
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), "index.html")
 
 
 # ──────────────────────────────────────────
