@@ -257,7 +257,7 @@ def visualizar_treinos():
             if dias_treinados == "sim":
                 print("Parabéns! Continue assim.")
             elif dias_treinados == "não" or dias_treinados == "nao":
-                print("Para concluir suas metas é preciso que a rotina planejada seja realista")
+                print("Alcançar sua meta desejada exige uma rotina realista e adaptada ao seu estilo de vida.")
             else:
                 print("Resposta inválida")
         else:
