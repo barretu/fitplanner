@@ -1,3 +1,6 @@
+import random
+import os
+
 treinos = []
 metas = []
 evolucoes = []
@@ -6,12 +9,104 @@ arquivo_treinos = "treinos.txt"
 arquivo_metas = "metas.txt"
 arquivo_evolucoes = "evolucoes.txt"
 
+sugestoes = {
+    "1": {
+        "objetivo": "Perder Peso",
+        "exercicios": [
+            "Musculação combinada com Corrida",
+            "Treino de HIIT na esteira",
+            "Ciclismo indoor intenso",
+            "Circuito funcional com o peso do próprio corpo"
+        ],
+        "divisao": [
+            "3 dias de musculação + 2 dias de cardio focado",
+            "4 dias de treino no estilo Full Body (corpo todo)",
+            "Alternando 1 dia de treino de força e 1 dia de cardio aeróbico"
+        ],
+        "habitos": [
+            "Beber pelo menos 3L de água por dia",
+            "Evitar telas de celular e TV 1 hora antes de dormir",
+            "Trocar o elevador pelas escadas sempre que possível"
+        ],
+        "descanso": [
+            "30 a 45 segundos entre as séries",
+            "45 a 60 segundos para manter os batimentos cardíacos altos",
+            "No máximo 1 minuto de pausa entre os blocos de exercícios"
+        ],
+        "alimentacao": [
+            "Focar em um déficit calórico leve e boa ingestão de proteínas",
+            "Aumentar o consumo de fibras e hortaliças nas refeições",
+            "Reduzir drasticamente o consumo de alimentos ultraprocessados e açúcar"
+        ]
+    },
+    "2": {
+        "objetivo": "Ganhar Massa Muscular",
+        "exercicios": [
+            "Treino de força com foco em exercícios compostos (Agachamento, Supino, Levantamento Terra)",
+            "Musculação intensa com progressão de carga controlada",
+            "Treino tensionado focado na fase excêntrica (descida) do movimento"
+        ],
+        "divisao": [
+            "Divisão ABC tradicional (Peito/Tríceps, Costas/Bíceps, Pernas/Ombros)",
+            "Divisão ABCD focando no extensão isolada de grandes grupos musculares",
+            "Treino estruturado em Push/Pull/Legs (Empurrar, Puxar, Pernas)"
+        ],
+        "habitos": [
+            "Dormir rigorosamente de 7 a 8 horas por noite para recuperação",
+            "Anotar as cargas para garantir que está evoluindo os pesos nos treinos",
+            "Evitar treinar em jejum prolongado para não perder rendimento"
+        ],
+        "descanso": [
+            "60 a 90 segundos entre as séries",
+            "1 a 2 minutos para recuperação total da força máxima",
+            "90 segundos focados em restabelecer o fôlego antes da próxima carga pesada"
+        ],
+        "alimentacao": [
+            "Manter um superávit calórico limpo com carboidratos complexos",
+            "Garantir uma boa fonte de proteína em cada refeição",
+            "Consumir gorduras boas como abacate, ovos e castanhas"
+        ]
+    },
+    "3": {
+        "objetivo": "Melhorar Condicionamento Físico",
+        "exercicios": [
+            "Circuitos funcionais cronometrados sem descanso longo",
+            "Natação de intensidade moderada a alta",
+            "Corrida de rua intervalada ou treinos de Crossfit"
+        ],
+        "divisao": [
+            "3 a 5 dias na semana alternando treinos de força e treinos de fôlego",
+            "Treino de endurance intercalado com dias de descanso ativo (caminhada leve)",
+            "Estrutura semanal focada em flexibilidade, mobilidade e resistência cardiovascular"
+        ],
+        "habitos": [
+            "Praticar alongamentos diários ao acordar ou antes de dormir",
+            "Controlar o ritmo respiratório e a postura durante as atividades do dia",
+            "Manter a consistência na frequência semanal, mesmo em dias frios ou chuvosos"
+        ],
+        "descanso": [
+            "30 a 45 segundos para manter a intensidade lá no alto",
+            "Descanso dinâmico (como caminhar devagar enquanto aguarda o próximo round)",
+            "Pausas curtas para simular situações reais de cansaço extremo"
+        ],
+        "alimentacao": [
+            "Dieta rica em micronutrientes vindos de frutas de cores variadas",
+            "Hidratação constante dividida antes, durante e logo após o treino",
+            "Consumir carboidratos de rápida absorção logo antes de treinos longos de endurance"
+        ]
+    }
+}
+
+# ===== FUNÇÃO DE LIMPEZA DE TELA =====
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+# ======================================
+
 def salvar_treinos():
     arquivo = open(arquivo_treinos, "w", encoding="utf-8")
-
     for treino in treinos:
         meta = treino.get("meta", "")
-
         linha = (
             treino["nome"] + "|" +
             treino["tipo"] + "|" +
@@ -20,28 +115,22 @@ def salvar_treinos():
             treino["objetivo"] + "|" +
             meta + "\n"
         )
-
         arquivo.write(linha)
-
     arquivo.close()
 
 def salvar_metas():
     arquivo = open(arquivo_metas, "w", encoding="utf-8")
-
     for meta in metas:
         linha = (
             meta["descricao"] + "|" +
             meta["prazo"] + "|" +
             meta["status"] + "\n"
         )
-
         arquivo.write(linha)
-
     arquivo.close()
 
 def salvar_evolucoes():
     arquivo = open(arquivo_evolucoes, "w", encoding="utf-8")
-
     for evolucao in evolucoes:
         linha = (
             evolucao["data"] + "|" +
@@ -49,9 +138,7 @@ def salvar_evolucoes():
             str(evolucao["altura"]) + "|" +
             str(evolucao["gordura"]) + "\n"
         )
-
         arquivo.write(linha)
-
     arquivo.close()
 
 def cadastrar_treino():
@@ -115,9 +202,7 @@ def cadastrar_treino():
             adicionar = input("Deseja adicionar outro exercício? (sim/não) ").lower()
 
         treinos.append(treino)
-
         salvar_treinos()
-
         print("Treino cadastrado com sucesso!")
 
     except ValueError:
@@ -155,32 +240,26 @@ def visualizar_treinos():
 
                 contador = contador + 1
 
-        print(f"Há {len(treinos)} treino(s) no seu fitplanner")
+        print(f"\nHá {len(treinos)} treino(s) no seu fitplanner")
         print(f"Suas metas são: {metas}")
 
         concluir = input("Alguma meta já foi alcançada(sim ou não)? ").lower()
 
-        if concluir == "sim" or concluir == "Sim":
+        if concluir == "sim":
             print("Parabéns!")
-
             qtd_concluidas = int(input("Digite o número de metas concluídas: "))
-
             for i in range (qtd_concluidas):
-                meta_concluida = input("Qual meta foi concluida")
+                meta_concluida = input("Qual meta foi concluida? ")
                 metas_concluidas = []
                 metas_concluidas.append(meta_concluida)
-
         elif concluir == "não" or concluir == "nao":
             dias_treinados = input("A quantidade de treinos realizados corresponde a sua meta? ").lower()
             if dias_treinados == "sim":
                 print("Parabéns! Continue assim.")
-
             elif dias_treinados == "não" or dias_treinados == "nao":
-                print("Para concluir suas metas é preciso que a rotina planejada seja realista")
-
+                print("Alcançar sua meta desejada exige uma rotina realista e adaptada ao seu estilo de vida.")
             else:
                 print("Resposta inválida")
-
         else:
             print("Resposta inválida")
 
@@ -191,7 +270,6 @@ def visualizar_treinos():
 
 def editar_treino():
     visualizar_treinos()
-
     try:
         numero = int(input("\nDigite o número do treino que deseja editar: "))
 
@@ -218,15 +296,12 @@ def editar_treino():
                     }
 
                     treino["exercicios"].append(exercicio)
-
                     adicionar = input("Deseja adicionar outro exercício? ").lower()
 
                 salvar_treinos()
-
                 print("Exercícios editados.")
             else:
                 print("\nExercícios do treino:")
-
                 contador = 1
                 for exercicio in treino["exercicios"]:
                     print("\nExercício", contador)
@@ -235,14 +310,12 @@ def editar_treino():
                     print("Repetições:", exercicio["repeticoes"])
                     print("Tempo:", exercicio["tempo"])
                     print("Distância:", exercicio["distancia"])
-
                     contador = contador + 1
 
                 numero_exercicio = int(input("\nDigite o número do exercício que deseja editar: "))
 
                 if numero_exercicio >= 1 and numero_exercicio <= len(treino["exercicios"]):
                     exercicio = treino["exercicios"][numero_exercicio - 1]
-
                     exercicio["nome"] = input("Novo nome do exercício: ")
                     exercicio["series"] = input("Novas séries: ")
                     exercicio["repeticoes"] = input("Novas repetições: ")
@@ -250,7 +323,6 @@ def editar_treino():
                     exercicio["distancia"] = input("Nova distância, se tiver: ")
 
                     salvar_treinos()
-
                     print("Exercício editado.")
                 else:
                     print("Exercício não encontrado.")
@@ -259,23 +331,17 @@ def editar_treino():
 
     except ValueError:
         print("Digite apenas algarismos")
-
     except NameError:
         print("Digite o número de um treino existente")
-
     except TypeError:
         print("Digite apenas algarismos")
-
 
 def carregar_treinos():
     try:
         arquivo = open(arquivo_treinos, "r", encoding="utf-8")
-
         for linha in arquivo.readlines():
             dados = linha.strip().split("|")
-
             if len(dados) >= 5:
-
                 treino = {
                     "nome": dados[0],
                     "tipo": dados[1],
@@ -284,14 +350,10 @@ def carregar_treinos():
                     "objetivo": dados[4],
                     "exercicios": []
                 }
-
                 if len(dados) >= 6:
                     treino["meta"] = dados[5]
-
                 treinos.append(treino)
-
         arquivo.close()
-
     except FileNotFoundError:
         pass
 
@@ -317,16 +379,12 @@ def cadastrar_meta():
         }
 
         metas.append(meta)
-
         salvar_metas()
-
         print("Meta cadastrada com sucesso!")
-
     except ValueError:
         print("Erro: Digite os valores corretamente no cadastro da meta.")
     else:
         print("Cadastro de meta finalizado sem erros.")
-
 
 def visualizar_metas():
     try:
@@ -345,7 +403,6 @@ def visualizar_metas():
     else:
         print("\nVisualização de metas concluída sem erros.")
 
-
 def editar_meta():
     visualizar_metas()
     try:
@@ -355,26 +412,20 @@ def editar_meta():
             meta["descricao"] = input("Nova descrição da meta: ").strip()
             meta["prazo"] = input("Novo prazo (DD/MM/AAAA): ").strip()
             meta["status"] = input("Novo status (Em andamento/Concluída): ").strip()
-
             salvar_metas()
-
             print("Meta editada com sucesso!")
         else:
             print("Meta não encontrada.")
     except ValueError:
         print("Digite apenas algarismos.")
 
-
 def excluir_meta():
     visualizar_metas()
     try:
         numero = int(input("\nDigite o número da meta que deseja excluir: "))
         if numero >= 1 and numero <= len(metas):
-
             metas.pop(numero - 1)
-
             salvar_metas()
-
             print("Meta excluída.")
         else:
             print("Meta não encontrada.")
@@ -384,7 +435,6 @@ def excluir_meta():
 def cadastrar_evolucao():
     try:
         print("\n--- Cadastrar evolução física ---")
-
         data = input("Data DD/MM/AAAA: ").strip()
         peso = float(input("Peso: "))
         altura = float(input("Altura: "))
@@ -399,9 +449,7 @@ def cadastrar_evolucao():
 
         evolucoes.append(evolucao)
         salvar_evolucoes()
-
         print("Evolução física cadastrada com sucesso!")
-
     except ValueError:
         print("Digite valores válidos.")
 
@@ -410,14 +458,12 @@ def visualizar_evolucoes():
         print("\nNenhuma evolução física cadastrada.")
     else:
         contador = 1
-
         for evolucao in evolucoes:
             print("\nEvolução", contador)
             print("Data:", evolucao["data"])
             print("Peso:", evolucao["peso"])
             print("Altura:", evolucao["altura"])
             print("Percentual de gordura:", evolucao["gordura"])
-
             contador += 1
 
 def vincular_meta_ao_treino():
@@ -430,11 +476,8 @@ def vincular_meta_ao_treino():
         if numero_treino >= 1 and numero_treino <= len(treinos) and numero_meta >= 1 and numero_meta <= len(metas):
             treino = treinos[numero_treino - 1]
             meta = metas[numero_meta - 1]
-
             treino["meta"] = meta["descricao"]
-
             salvar_treinos()
-
             print(f"Meta '{meta['descricao']}' vinculada ao treino '{treino['nome']}' com sucesso!")
         else:
             print("Treino ou meta não encontrados.")
@@ -444,106 +487,196 @@ def vincular_meta_ao_treino():
 def carregar_metas():
     try:
         arquivo = open(arquivo_metas, "r", encoding="utf-8")
-
         for linha in arquivo.readlines():
             dados = linha.strip().split("|")
-
             if len(dados) == 3:
                 meta = {
                     "descricao": dados[0],
                     "prazo": dados[1],
                     "status": dados[2]
                 }
-
                 metas.append(meta)
-
         arquivo.close()
-
     except FileNotFoundError:
         pass
-
 
 def excluir_treino():
     visualizar_treinos()
     try:
-
         numero = int(input("\nDigite o número do treino que deseja excluir: "))
-
         if numero >= 1 and numero <= len(treinos):
-
             treinos.pop(numero - 1)
-
             salvar_treinos()
-
             print("Treino excluído.")
         else:
             print("Treino não encontrado.")
-
     except ValueError:
         print("Digite apenas algarismos")
 
+def exibir_sugestoes_aleatorias():
+    print("\n--- Escolha seu Objetivo ---")
+    print("1. Perder Peso")
+    print("2. Ganhar Massa Muscular")
+    print("3. Melhorar Condicionamento Físico")
+    
+    opcao = input("Escolha uma opção: ")
+    
+    if opcao in sugestoes:
+        dados = sugestoes[opcao]
+        print(f"\n=== SUGESTÕES ALEATÓRIAS PARA: {dados['objetivo'].upper()} ===")
+        print(f"Exercício: {random.choice(dados['exercicios'])}")
+        print(f"Divisão Semanal: {random.choice(dados['divisao'])}")
+        print(f"Hábito Saudável: {random.choice(dados['habitos'])}")
+        print(f"Tempo de Descanso: {random.choice(dados['descanso'])}")
+        print(f"Dica de Alimentação: {random.choice(dados['alimentacao'])}")
+    else:
+        print("\nOpção inválida.")
+
+# ===== SUBMENUS =====
+
+def menu_treinos():
+    while True:
+        limpar_tela()
+        print("\n--- Gerenciar Treinos ---")
+        print("1 - Adicionar treino")
+        print("2 - Visualizar treinos")
+        print("3 - Editar treino")
+        print("4 - Excluir treino")
+        print("5 - Vincular meta a treino")
+        print("6 - Voltar ao menu principal")
+        
+        try:
+            opcao = int(input("Digite a opção: "))
+            if opcao == 1:
+                limpar_tela()
+                cadastrar_treino()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 2:
+                limpar_tela()
+                visualizar_treinos()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 3:
+                limpar_tela()
+                editar_treino()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 4:
+                limpar_tela()
+                excluir_treino()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 5:
+                limpar_tela()
+                vincular_meta_ao_treino()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 6:
+                break
+            else:
+                print("Opção inválida.")
+                input("\nPressione Enter para continuar...")
+        except ValueError:
+            print("Digite apenas algarismos.")
+            input("\nPressione Enter para continuar...")
+
+def menu_metas():
+    while True:
+        limpar_tela()
+        print("\n--- Gerenciar Metas ---")
+        print("1 - Adicionar meta")
+        print("2 - Visualizar metas")
+        print("3 - Editar meta")
+        print("4 - Excluir meta")
+        print("5 - Voltar ao menu principal")
+        
+        try:
+            opcao = int(input("Digite a opção: "))
+            if opcao == 1:
+                limpar_tela()
+                cadastrar_meta()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 2:
+                limpar_tela()
+                visualizar_metas()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 3:
+                limpar_tela()
+                editar_meta()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 4:
+                limpar_tela()
+                excluir_meta()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 5:
+                break
+            else:
+                print("Opção inválida.")
+                input("\nPressione Enter para continuar...")
+        except ValueError:
+            print("Digite apenas algarismos.")
+            input("\nPressione Enter para continuar...")
+
+def menu_evolucoes():
+    while True:
+        limpar_tela()
+        print("\n--- Gerenciar Evoluções ---")
+        print("1 - Cadastrar evolução")
+        print("2 - Visualizar evoluções")
+        print("3 - Voltar ao menu principal")
+        
+        try:
+            opcao = int(input("Digite a opção: "))
+            if opcao == 1:
+                limpar_tela()
+                cadastrar_evolucao()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 2:
+                limpar_tela()
+                visualizar_evolucoes()
+                input("\nPressione Enter para continuar...")
+            elif opcao == 3:
+                break
+            else:
+                print("Opção inválida.")
+                input("\nPressione Enter para continuar...")
+        except ValueError:
+            print("Digite apenas algarismos.")
+            input("\nPressione Enter para continuar...")
+
+
+# ===== INÍCIO DO PROGRAMA =====
 
 carregar_treinos()
 carregar_metas()
 
 while True:
-    print("\n--- FitPlanner ---")
-    print("1 - Adicionar treino")
-    print("2 - Visualizar treinos")
-    print("3 - Editar treino")
-    print("4 - Excluir treino")
-    print("5 - Adicionar meta")
-    print("6 - Visualizar metas")
-    print("7 - Editar meta")
-    print("8 - Excluir meta")
-    print("9 - Vincular meta a treino")
-    print("10 - Parar")
-
-    print()
+    limpar_tela()
+    print("\n--- FitPlanner (Menu Principal) ---")
+    print("1 - Gerenciar Treinos")
+    print("2 - Gerenciar Metas")
+    print("3 - Gerenciar Evoluções Físicas")
+    print("4 - Gerar Sugestões Fitness")
+    print("5 - Sair")
 
     try:
         opcao = int(input("Digite a opção: "))
 
     except ValueError:
-        print("Digite apenas algarismos entre as opções")
+        print("Digite apenas algarismos entre as opções.")
+        input("\nPressione Enter para continuar...")
         continue
 
     if opcao == 1:
-        cadastrar_treino()
-
+        menu_treinos()
     elif opcao == 2:
-        visualizar_treinos()
-
+        menu_metas()
     elif opcao == 3:
-        editar_treino()
-
+        menu_evolucoes()
     elif opcao == 4:
-        excluir_treino()
-
+        limpar_tela()
+        exibir_sugestoes_aleatorias()
+        input("\nPressione Enter para voltar ao menu principal...")
     elif opcao == 5:
-        cadastrar_meta()
-
-    elif opcao == 6:
-        visualizar_metas()
-
-    elif opcao == 7:
-        editar_meta()
-
-    elif opcao == 8:
-        excluir_meta()
-
-    elif opcao == 9:
-        vincular_meta_ao_treino()
-
-    elif opcao == 10:
-        cadastrar_evolucao()
-
-    elif opcao == 11:
-        visualizar_evolucoes()
-
-    elif opcao == 12:
-        print("Programa finalizado.")
+        limpar_tela()
+        print("Programa finalizado. Até logo!")
         break
-
     else:
-        print("Opção inválida.")
+        print("Opção inválida. Tente novamente.")
+        input("\nPressione Enter para continuar...")
