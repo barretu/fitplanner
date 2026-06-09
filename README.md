@@ -50,18 +50,11 @@ python3 fitplanner.py
 
 ```
 --- FitPlanner ---
-1 - Adicionar treino
-2 - Visualizar treinos
-3 - Editar treino
-4 - Excluir treino
-5 - Adicionar meta
-6 - Visualizar metas
-7 - Editar meta
-8 - Excluir meta
-9 - Vincular meta a treino
-10 - Registrar evolução física
-11 - Visualizar evoluções
-12 - Parar
+1 - Gerenciar Treinos
+2 - Gerenciar Metas
+3 - Gerenciar Evoluções Físicas
+4 - Gerar Sugestões Fitness
+5 - Sair
 ```
 
 ---
